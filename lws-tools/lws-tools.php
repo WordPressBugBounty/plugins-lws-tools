@@ -4,10 +4,10 @@
  * Plugin Name:       LWS Tools
  * Plugin URI:        https://www.lws.fr/
  * Description:       Optimize and modify your website's parameters
- * Version:           2.4.8
+ * Version:           2.4.9
  * Author:            LWS
  * Author URI:        https://www.lws.fr
- * Tested up to:      6.6
+ * Tested up to:      6.7
  * Domain Path:       /languages
  * Requires PHP :     7.3
  *

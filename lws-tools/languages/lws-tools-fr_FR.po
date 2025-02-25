@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.4.3\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: lws-tools.php:
 msgid "Rate"
@@ -981,3 +981,6 @@ msgstr "Votre site pourrait être inaccessible pendant quelques secondes après 
 
 msgid "Before changing the prefix"
 msgstr "Avant de modifier le préfix"
+
+msgid "Boost your website using LWS Optimize, with file-based cache, file minification, lazy-loading and more"
+msgstr "Boostez votre site web avec LWS Optimize, avec mise en cache des fichiers, minification, chargement différé et plus encore"
