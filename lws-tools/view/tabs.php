@@ -11,9 +11,6 @@ $plugins = array(
         'lws-tools' => array('LWS Tools', __('This plugin provides you with several tools and shortcuts to manage, secure and optimise your WordPress website. Updating plugins and themes, accessing informations about your server, managing your website parameters, etc... Personnalize every aspect of your website!', 'lws-tools'), false)
 );
 
-//Adapt the array to change which plugins are featured as ads
-$plugins_showcased = array('lws-hide-login', 'lws-optimize', 'lws-cleaner');
-
 $plugins_activated = array();
 $all_plugins = get_plugins();
 
@@ -44,62 +41,43 @@ $tabs_list = array(
 
 <!-- Beginning main content block -->
 <div class="lws_tk_main_bloc">
-    <!-- Beginning of the blue part (ad part) -->
-    <div class="lws_tk_adbloc">
-        <div class="lws_tk_adbloc_left">
-            <span
-                class="lws_tk_ad_title"><?php echo esc_html('LWS Tools'); ?></span>
-            <span class="lws_tk_ad_subtext">
-                <?php esc_html_e('by', 'lws-tools'); ?></span>
-            <img class="lws_tk_ad_img"
-                src="<?php echo esc_url(plugins_url('images/logo_lws.png', __DIR__))?>"
-                alt="LWS Logo" width="238px" height="60px">
-            <!-- Need to adapt the URL -->
-        </div>
-        <div class="lws_tk_adbloc_right">
-            <span class="lws_tk_ad_t1">
-                <?php esc_html_e('Discover LWS efficient, fast and secure web hosting!', 'lws-tools'); ?></span>
-            <br>
-            <img style="vertical-align:sub; margin-right:5px"
-                src="<?php echo esc_url(plugins_url('images/wordpress_blanc.svg', __DIR__))?>"
-                alt="LWS Cache Logo" width="20px" height="20px">
-            <!-- Need to adapt the URL -->
-            <span class="lws_tk_ad_t2">
-                <?php esc_html_e('15% off your WordPress-optimized hosting with the code: ', 'lws-tools'); ?></span>
-            <br>
-            <div style="margin-top:10px">
-                <label onclick="lws_tk_copy_clipboard(this)" class="lws_tk_ad_label lws_tk_tooltip" readonly
-                    text="WPEXT15">
-                    <span><?php echo esc_html('WPEXT15'); ?></span>
-                    <img style="vertical-align: middle; padding-left: 47px;"
-                        src="<?php echo esc_url(plugins_url('images/copier.svg', __DIR__))?>"
-                        alt="Logo Copy Element" width="15px" height="18px">
-                    <!-- Need to adapt the URL -->
-                </label>
-                <a target="_blank"
-                    href="<?php echo esc_url('https://www.lws.fr/hebergement_wordpress.php');?>"><button
-                        type="button"
-                        class="lws_tk_ad_button"><?php esc_html_e("Let's go!", 'lws-tools'); ?></button></a>
+
+    <div class="lwstk_title_banner">
+        <div class="lwstk_top_banner">
+            <img src="<?php echo esc_url(plugins_url('images/plugin_lws_tools_logo.svg', __DIR__)) ?>" alt="LWS Tools Logo" width="80px" height="80px">
+            <div class="lwstk_top_banner_text">
+                <div class="lwstk_top_title_block">
+                    <div style="display: flex; flex-direction: column; gap: 15px;">
+                        <div class="lwstk_top_title">
+                            <span><?php echo esc_html('LWS Tools'); ?></span>
+                            <span><?php esc_html_e('by', 'lws-tools'); ?></span>
+                            <span class="logo_lws"></span>
+                        </div>
+
+                        <div class="lwstk_top_description">
+                            <?php echo esc_html_e('LWS Tools offer toolkits and shortcuts to manage your WordPress website. It lets you secure and optimize  your websites easily and visualize several useful informations about your server, website and database.', 'lws-tools'); ?>
+                        </div>
+                    </div>
+                    <div class="lwstk_rate_block">
+                        <div class="lwstk_top_rateus">
+                            <?php echo esc_html_e('You like this plugin ? ', 'lws-tools'); ?>
+                            <?php echo wp_kses(__('A <a href="https://wordpress.org/support/plugin/lws-tools/reviews/#new-post" target="_blank" class="link_to_rating_with_stars"><div class="lwstk_stars">★★★★★</div> rating</a> will motivate us a lot.', 'lws-tools'), ['a' => ['class' => [], 'href' => [], 'target' => []], 'div' => ['class' => []]]); ?>
+                        </div>
+                        <div class="lwstk_bottom_rateus">
+                            <img src="<?php echo esc_url(plugins_url('images/flamme.svg', __DIR__)) ?>" alt="Flamme Logo" width="16px" height="20px" style="margin-right: 5px;">
+                            <?php echo wp_kses(__('<b>-15%</b> on our <a href="https://www.lws.fr/support/" target="_blank" class="link_to_support">WordPress hostings</a> with the code', 'lws-tools'), ['b' => [], 'a' => ['class' => [], 'href' => [], 'target' => []]]); ?>
+                            <div class="lwstk_top_code">
+                                WPEXT15
+                                <img src="<?php echo esc_url(plugins_url('images/copier_new.svg', __DIR__)) ?>" alt="Logo Copy Element" width="15px" height="18px" onclick="lwstktimize_copy_clipboard(this)" readonly text="WPEXT15">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <!--  END -->
-    <!-- Sub-block, where the plugin is presented -->
-    <div class="lws_tk_subtitlebloc">
-        <img style="margin-top:20px"
-            src="<?php echo esc_url(plugins_url('images/plugin_lws_tools_logo.svg', __DIR__))?>"
-            alt="LWS Cache Logo" width="100px" height="100px">
-        <!-- Change image -->
-        <!-- Change next block with new text -->
-        <div class="lws_tk_title-text">
-            <p class="lws_tk_top_side_desc">
-                <?php esc_html_e('LWS Tools offer toolkits and shortcuts to manage your WordPress website. It lets you secure and optimize  your websites easily and visualize several useful informations about your server, website and database.', 'lws-tools'); ?>
-            </p>
-            <p class="lws_tk_top_side_desc">
-                <strong><?php esc_html_e("Manage your WordPress website now!", 'lws-tools'); ?></strong>
-            </p>
-        </div>
-    </div>
+
+
 
     <!-- Home to the tabs + content + ads -->
     <div class="lws_tk_main_content">
@@ -147,145 +125,6 @@ $tabs_list = array(
             </div>
             <?php endforeach?>
         </div>
-
-
-
-        <!-- ad blocks, need to change image, ID, name, text... -->
-        <!-- Choose 3 -->
-        <div class="lws_tk_list_block_ad">
-            <?php if (!get_transient('lwstk_remind_me') && !get_option('lwstk_do_not_ask_again')) : ?>
-                <div class="lws_tk_block_ad_for_review">
-                    <div class="lws_tk_block_ad_review_title">
-                        <?php esc_html_e('Thank you for using LWS Tools!', 'lws-tools');?>
-                    </div>
-                    <div class="lws_tk_block_ad_review_stars">
-                        <img src="<?php echo esc_url(plugins_url('images/notation.svg', __DIR__))?>"
-                        height="25px" width="159px">
-                    </div>
-                    <div class="lws_tk_block_ad_review_description">
-                        <?php echo wp_kses(__('<a href="https://wordpress.org/support/plugin/lws-tools/reviews/" target="_blank">Evaluate our plugin</a> to help others optimise and secure their WordPress website!', 'lws-tools'), array('a' => array("href" => array())));?>
-                    </div>
-                </div>
-            <?php endif ?>
-            <!-- Same as before -->
-            <div class="lws_tk_block_ad">
-                <div style="display: flex; justify-content: space-between; margin-bottom:15px">
-                    <span style="margin-top:5px">
-                        <img style="vertical-align:sub; margin-right:5px"
-                            src="<?php echo esc_url(plugins_url('images/plugin_lws_hide_login.svg', __DIR__))?>"
-                            alt="LWS Cache Logo" width="25px" height="23px">
-                        <span
-                            class="lws_tk_block_ad_text"><?php echo esc_html('Hide Login');?></span>
-                    </span>
-                    <button class="lws_tk_button_ad_block" onclick="install_plugin(this)" value="lws-hide-login"
-                        id="lws-hide-login">
-                        <span>
-                            <img style="vertical-align:sub; margin-right:5px"
-                                src="<?php echo esc_url(plugins_url('images/securise.svg', __DIR__))?>"
-                                alt="LWS Cache Logo" width="20px" height="19px">
-                            <span
-                                class="lws_tk_button_text"><?php esc_html_e('Install', 'lws-tools'); ?></span>
-                        </span>
-                        <span class="hidden" name="loading" style="padding-left:5px">
-                            <img style="vertical-align:sub; margin-right:5px"
-                                src="<?php echo esc_url(plugins_url('images/loading.svg', __DIR__))?>"
-                                alt="" width="18px" height="18px">
-                        </span>
-                        <span class="hidden"
-                            name="activate"><?php echo esc_html_e('Activate', 'lws-tools'); ?></span>
-                        <span class="hidden" name="validated">
-                            <img style="vertical-align:sub; margin-right:5px" width="18px" height="18px"
-                                src="<?php echo esc_url(plugins_url('images/check_blanc.svg', __DIR__))?>">
-                            <?php esc_html_e('Activated', 'lws-tools'); ?>
-                        </span>
-                    </button>
-                </div>
-                <span class="lws_tk_text_ad">
-                    <?php esc_html_e("Hide your administration page (wp-admin) and change your login page's URL (wp-login)", 'lws-tools'); ?>
-                </span>
-            </div>
-
-            <!-- Same old... -->
-            <div class="lws_tk_block_ad">
-                <div style="display: flex; justify-content: space-between; margin-bottom:15px">
-                    <span style="margin-top:5px">
-                        <img style="vertical-align:sub; margin-right:5px"
-                            src="<?php echo esc_url(plugins_url('images/lws_optimize_menu.svg', __DIR__))?>"
-                            alt="LWS Optimize" width="25px" height="23px">
-                        <span
-                            class="lws_tk_block_ad_text"><?php echo esc_html('LWS Optimize');?></span>
-                    </span>
-                    <button class="lws_tk_button_ad_block" onclick="install_plugin(this)" value="lws-optimize"
-                        id="lws-optimize">
-                        <span>
-                            <img style="vertical-align:sub; margin-right:5px"
-                                src="<?php echo esc_url(plugins_url('images/securise.svg', __DIR__))?>"
-                                alt="" width="20px" height="19px">
-                            <span
-                                class="lws_tk_button_text"><?php esc_html_e('Install', 'lws-tools'); ?></span>
-                        </span>
-                        <span class="hidden" name="loading" style="padding-left:5px">
-                            <img style="vertical-align:sub; margin-right:5px"
-                                src="<?php echo esc_url(plugins_url('images/loading.svg', __DIR__))?>"
-                                alt="" width="18px" height="18px">
-                        </span>
-                        <span class="hidden"
-                            name="activate"><?php echo esc_html_e('Activate', 'lws-tools'); ?></span>
-                        <span class="hidden" name="validated">
-                            <img style="vertical-align:sub; margin-right:5px" width="18px" height="18px"
-                                src="<?php echo esc_url(plugins_url('images/check_blanc.svg', __DIR__))?>">
-                            <?php esc_html_e('Activated', 'lws-tools'); ?>
-                        </span>
-                    </button>
-                </div>
-                <span class="lws_tk_text_ad">
-                    <?php esc_html_e('Boost your website using LWS Optimize, with file-based cache, file minification, lazy-loading and more', 'lws-tools'); ?>
-                </span>
-            </div>
-
-            <div class="lws_tk_block_ad">
-                <div style="display: flex; justify-content: space-between; margin-bottom:15px">
-                    <span style="margin-top:5px">
-                        <img style="vertical-align:sub; margin-right:5px"
-                            src="<?php echo esc_url(plugins_url('images/plugin_lws_cleaner.svg', __DIR__))?>"
-                            alt="LWS Cache Logo" width="25px" height="23px">
-                        <!-- Need to change -->
-                        <span
-                            class="lws_tk_block_ad_text"><?php echo esc_html('LWS Cleaner');?></span>
-                        <!-- Need to change -->
-                    </span>
-                    <button class="lws_tk_button_ad_block" onclick="install_plugin(this)" value="lws-cleaner"
-                        id="lws-cleaner">
-                        <!-- Need to change -->
-                        <span>
-                            <img style="vertical-align:sub; margin-right:5px"
-                                src="<?php echo esc_url(plugins_url('images/securise.svg', __DIR__))?>"
-                                alt="LWS Cache Logo" width="20px" height="19px">
-                            <!-- Need to change -->
-                            <span
-                                class="lws_tk_button_text"><?php esc_html_e('Install', 'lws-tools'); ?></span>
-                        </span>
-                        <span class="hidden" name="loading" style="padding-left:5px">
-                            <img style="vertical-align:sub; margin-right:5px"
-                                src="<?php echo esc_url(plugins_url('images/loading.svg', __DIR__))?>"
-                                alt="" width="18px" height="18px">
-                            <!-- Need to change -->
-                        </span>
-                        <span class="hidden"
-                            name="activate"><?php echo esc_html_e('Activate', 'lws-tools'); ?></span>
-                        <span class="hidden" name="validated">
-                            <img style="vertical-align:sub; margin-right:5px" width="18px" height="18px"
-                                src="<?php echo esc_url(plugins_url('images/check_blanc.svg', __DIR__))?>">
-                            <!-- Need to change -->
-                            <?php esc_html_e('Activated', 'lws-tools'); ?>
-                        </span>
-                    </button>
-                </div>
-                <span class="lws_tk_text_ad">
-                    <?php esc_html_e('Clean your WordPress website in a few clics to gain in speed: posts, medias...', 'lws-tools'); ?>
-                </span>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -301,78 +140,6 @@ $tabs_list = array(
     }
 </script>
 
-
-<!-- Here, need to change id of the selector and tabs -->
-<script>
-    const tabs = document.querySelectorAll('.tab_nav_lws_tk[role="tab"]');
-
-    // Add a click event handler to each tab
-    tabs.forEach((tab) => {
-        tab.addEventListener('click', lws_tk_changeTabs);
-    });
-
-    <?php if (isset($change_tab)) : ?>
-        var element = document.getElementById(
-        "<?php echo esc_attr($change_tab); ?>");
-        lws_tk_changeTabs(element);
-    <?php else : ?>
-        lws_tk_selectorMove(document.getElementById('nav-notifications'), document.getElementById('nav-notifications').parentNode);
-    <?php endif ?>
-
-    function lws_tk_selectorMove(target, parent) {
-        const cursor = document.getElementById('selector');
-        var element = target.getBoundingClientRect();
-        var bloc = parent.getBoundingClientRect();
-
-        var padding = parseInt((window.getComputedStyle(target, null).getPropertyValue('padding-left')).slice(0, -
-            2));
-        var margin = parseInt((window.getComputedStyle(target, null).getPropertyValue('margin-left')).slice(0, -2));
-        var begin = (element.left - bloc.left) - margin;
-        var ending = target.clientWidth + 2 * margin;
-
-        cursor.style.width = ending + "px";
-        cursor.style.left = begin + "px";
-    }
-
-    function lws_tk_changeTabs(e) {
-        var target;
-        if (e.target === undefined) {
-            target = e;
-        } else {
-            target = e.target;
-        }
-        const parent = target.parentNode;
-        const grandparent = parent.parentNode.parentNode;
-
-        // Remove all current selected tabs
-        parent
-            .querySelectorAll('.tab_nav_lws_tk[aria-selected="true"]')
-            .forEach(function(t) {
-                t.setAttribute('aria-selected', false);
-                t.classList.remove("active")
-            });
-
-        // Set this tab as selected
-        target.setAttribute('aria-selected', true);
-        target.classList.add('active');
-
-        // Hide all tab panels
-        grandparent
-            .querySelectorAll('.tab-pane.main-tab-pane[role="tabpanel"]')
-            .forEach((p) => p.setAttribute('hidden', true));
-
-        // Show the selected panel
-        grandparent.parentNode
-            .querySelector(`#${target.getAttribute('aria-controls')}`)
-            .removeAttribute('hidden');
-
-
-        lws_tk_selectorMove(target, parent);
-        if (target.id == 'nav-mysql') {
-            reset_table();
-        }
-    }
-</script>
 
 <script>
     var reset_table = (function() {
@@ -390,15 +157,7 @@ $tabs_list = array(
     jQuery(document).ready(function() {
         <?php foreach ($plugins_activated as $slug => $activated) : ?>
         <?php if ($activated == "full") : ?>
-        <?php if (in_array($slug, $plugins_showcased)): ?>
-        var button = jQuery(
-            "<?php echo esc_attr("#" . $slug); ?>"
-        );
-        button.children()[3].classList.remove('hidden');
-        button.children()[0].classList.add('hidden');
-        button.prop('onclick', false);
-        button.addClass('lws_tk_button_ad_block_validated');
-        <?php endif ?>
+
         /**/
         var button = jQuery(
             "<?php echo esc_attr("#bis_" . $slug); ?>"
@@ -409,13 +168,6 @@ $tabs_list = array(
         button.addClass('lws_tk_button_ad_block_validated');
 
         <?php elseif ($activated == "half") : ?>
-        <?php if (in_array($slug, $plugins_showcased)): ?>
-        var button = jQuery(
-            "<?php echo esc_attr("#" . $slug); ?>"
-        );
-        button.children()[2].classList.remove('hidden');
-        button.children()[0].classList.add('hidden');
-        <?php endif ?>
         /**/
         var button = jQuery(
             "<?php echo esc_attr("#bis_" . $slug); ?>"
@@ -533,6 +285,78 @@ $tabs_list = array(
                     }
                 }
             });
+        }
+    }
+</script>
+
+<!-- Here, need to change id of the selector and tabs -->
+<script>
+    const tabs = document.querySelectorAll('.tab_nav_lws_tk[role="tab"]');
+
+    // Add a click event handler to each tab
+    tabs.forEach((tab) => {
+        tab.addEventListener('click', lws_tk_changeTabs);
+    });
+
+    <?php if (isset($change_tab)) : ?>
+        var element = document.getElementById(
+        "<?php echo esc_attr($change_tab); ?>");
+        lws_tk_changeTabs(element);
+    <?php else : ?>
+        lws_tk_selectorMove(document.getElementById('nav-notifications'), document.getElementById('nav-notifications').parentNode);
+    <?php endif ?>
+
+    function lws_tk_selectorMove(target, parent) {
+        const cursor = document.getElementById('selector');
+        var element = target.getBoundingClientRect();
+        var bloc = parent.getBoundingClientRect();
+
+        var padding = parseInt((window.getComputedStyle(target, null).getPropertyValue('padding-left')).slice(0, -
+            2));
+        var margin = parseInt((window.getComputedStyle(target, null).getPropertyValue('margin-left')).slice(0, -2));
+        var begin = (element.left - bloc.left) - margin;
+        var ending = target.clientWidth + 2 * margin;
+
+        cursor.style.width = ending + "px";
+        cursor.style.left = begin + "px";
+    }
+
+    function lws_tk_changeTabs(e) {
+        var target;
+        if (e.target === undefined) {
+            target = e;
+        } else {
+            target = e.target;
+        }
+        const parent = target.parentNode;
+        const grandparent = parent.parentNode.parentNode;
+
+        // Remove all current selected tabs
+        parent
+            .querySelectorAll('.tab_nav_lws_tk[aria-selected="true"]')
+            .forEach(function(t) {
+                t.setAttribute('aria-selected', false);
+                t.classList.remove("active")
+            });
+
+        // Set this tab as selected
+        target.setAttribute('aria-selected', true);
+        target.classList.add('active');
+
+        // Hide all tab panels
+        grandparent
+            .querySelectorAll('.tab-pane.main-tab-pane[role="tabpanel"]')
+            .forEach((p) => p.setAttribute('hidden', true));
+
+        // Show the selected panel
+        grandparent.parentNode
+            .querySelector(`#${target.getAttribute('aria-controls')}`)
+            .removeAttribute('hidden');
+
+
+        lws_tk_selectorMove(target, parent);
+        if (target.id == 'nav-mysql') {
+            reset_table();
         }
     }
 </script>

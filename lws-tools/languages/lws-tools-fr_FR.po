@@ -380,7 +380,7 @@ msgstr "Supprimer toutes les extensions inutilisées (%d)"
 
 #: notifications.php:
 msgid "No unused <strong>plugins</strong> on this website"
-msgstr "Pas de <strong>extensions</strong> inutilisées sur ce site"
+msgstr "Pas d'<strong>extensions</strong> inutilisées sur ce site"
 
 #: notifications.php:
 msgid "<strong>%1$d theme(s)</strong> are unused out of %2$d"
@@ -984,3 +984,24 @@ msgstr "Avant de modifier le préfix"
 
 msgid "Boost your website using LWS Optimize, with file-based cache, file minification, lazy-loading and more"
 msgstr "Boostez votre site web avec LWS Optimize, avec mise en cache des fichiers, minification, chargement différé et plus encore"
+
+msgid "Create an llms.txt file in your WordPress root directory to control AI crawler access and behavior. This helps manage how large language models (LLMs) like GPT and Claude index your content."
+msgstr "Crée un fichier llms.txt dans le répertoire racine de votre WordPress pour contrôler l'accès et le comportement des crawlers d'IA. Cela aide à gérer comment les modèles de langage de grande taille (LLMs) comme GPT et Claude indexent votre contenu."
+
+msgid "LLM Optimization"
+msgstr "Optimisation LLM"
+
+msgid "A <a href='https://wordpress.org/support/plugin/lws-tools/reviews/#new-post' target='_blank' class='link_to_rating_with_stars'><div class='lwstk_stars'>★★★★★</div> rating</a> will motivate us a lot."
+msgstr "Une <a href='https://wordpress.org/support/plugin/lws-tools/reviews/#new-post' target='_blank' class='link_to_rating_with_stars'><div class='lwstk_stars'>★★★★★</div> note</a> nous motivera beaucoup."
+
+msgid "You like this plugin ? "
+msgstr "Vous aimez le plugin ? "
+
+msgid "<b>Exclusive</b>: Get <b>15%</b> off your WordPress hosting"
+msgstr "<b>Exclusif :</b> Obtenez <b>15%</b> de réduction sur les hébergements WordPress"
+
+msgid "<b>-15%</b> on our <a href=\"https://www.lws.fr/support/\" target=\"_blank\" class=\"link_to_support\">WordPress hostings</a> with the code"
+msgstr "<b>-15%</b> sur nos <a href=\"https://www.lws.fr/support/\" target=\"_blank\" class=\"link_to_support\">hébergements WordPress</a> avec le code"
+
+msgid "A <a href=\"https://wordpress.org/support/plugin/lws-tools/reviews/#new-post\" target=\"_blank\" class=\"link_to_rating_with_stars\"><div class=\"lwstk_stars\">★★★★★</div> rating</a> will motivate us a lot."
+msgstr "Une <a href=\"https://wordpress.org/support/plugin/lws-tools/reviews/#new-post\" target=\"_blank\" class=\"link_to_rating_with_stars\"> note <div class=\"lwstk_stars\">★★★★★</div></a> nous motivera beaucoup."

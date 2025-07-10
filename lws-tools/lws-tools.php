@@ -4,10 +4,10 @@
  * Plugin Name:       LWS Tools
  * Plugin URI:        https://www.lws.fr/
  * Description:       Optimize and modify your website's parameters
- * Version:           2.4.9
+ * Version:           2.5
  * Author:            LWS
  * Author URI:        https://www.lws.fr
- * Tested up to:      6.7
+ * Tested up to:      6.8
  * Domain Path:       /languages
  * Requires PHP :     7.3
  *
@@ -297,7 +297,7 @@ function lws_tk_create_page()
         //Update specific options with new prefix
         $wpdb->query("UPDATE {$new_prefix}options SET option_name='{$new_prefix}user_roles' WHERE option_name='{$wpdb->prefix}user_roles';");
 
-        $wpdb->query("UPDATE {$new_prefix}usermeta SET meta_key = 
+        $wpdb->query("UPDATE {$new_prefix}usermeta SET meta_key =
         CONCAT(
             REPLACE(LEFT(meta_key, " . strlen($wpdb->prefix) . "), '{$wpdb->prefix}', '{$new_prefix}'),
             SUBSTR(meta_key, " . (strlen($wpdb->prefix) + 1) . ")
@@ -406,6 +406,8 @@ function lws_tk_create_page()
 
     //OPTIMISATION
     $opti_list = array(
+        'llm_optimisation' =>
+        array(__('LLM Optimization', 'lws-tools'), __('Create an llms.txt file in your WordPress root directory to control AI crawler access and behavior. This helps manage how large language models (LLMs) like GPT and Claude index your content.', 'lws-tools'), true),
         'delete_live_writer' =>
         array(__('Delete Windows Live Writer manifest', 'lws-tools'), __('Delete the line WordPress add in the header of your website. Useless if you do not use Windows Live Writer.', 'lws-tools'), true),
         'less_revision' =>
@@ -580,6 +582,43 @@ function lws_tk_create_page()
 add_action('init', 'lws_tk_optimisations');
 function lws_tk_optimisations()
 {
+
+    if (get_option('lws_tk_llm_optimisation')) {
+        generate_llms_file(false);
+    }
+
+    // Automatically regenerate the file whenever one of the follwing hook is triggered
+    $hooks = [
+        'post_updated',
+        'wp_ajax_updatevbview',
+        'deleted_post',
+        'trashed_post',
+        'untrashed_post',
+        'customize_save_after'
+    ];
+
+    foreach($hooks as $hook) {
+        add_action($hook, function() {
+            if (get_option('lws_tk_llm_optimisation')) {
+                generate_llms_file(true);
+            }
+        });
+    }
+
+    // Regenerate llms.txt when WooCommerce is activated or deactivated
+    // as it will add new pages/posts to add to llms.txt
+    add_action('activated_plugin', function($plugin) {
+        if ($plugin === 'woocommerce/woocommerce.php' && get_option('lws_tk_llm_optimisation')) {
+            generate_llms_file(true);
+        }
+    });
+
+    add_action('deactivated_plugin', function($plugin) {
+        if ($plugin === 'woocommerce/woocommerce.php' && get_option('lws_tk_llm_optimisation')) {
+            generate_llms_file(true);
+        }
+    });
+
     /**
      * Sanitize more the name of media uploaded
      */
@@ -764,6 +803,73 @@ function lws_tk_optimisations()
                 wp_die(esc_html__('No feed available', 'lws-tools'));
             }
         }, 1);
+    }
+}
+
+function generate_llms_file($regenerate = false) {
+    $llms_file = ABSPATH . 'llms.txt';
+
+    // If we must regenerate the file, delete it then recreate it
+    if ($regenerate) {
+        unlink($llms_file);
+    }
+
+    if (!file_exists($llms_file)) {
+        $content = '';
+
+        $title = get_bloginfo() ?: site_url();
+        $content .= "# " . esc_html($title) . "\n\n";
+
+        $description = get_bloginfo('description') ?? '';
+        if (!empty($description)) {
+            $content .= "> " . esc_html($description) . "\n\n";
+        }
+
+        $args = array(
+            'post_type'      => "post",
+            'post_status'    => 'publish',
+            'fields'         => 'ids',
+            'posts_per_page' => -1, // Get all posts
+        );
+        $posts = get_posts($args);
+
+        $args = array(
+            'post_type'      => "page",
+            'post_status'    => 'publish',
+            'fields'         => 'ids',
+            'posts_per_page' => -1, // Get all pages
+        );
+        $pages = get_posts($args);
+
+        $content .= "# Posts\n\n";
+        foreach ($posts as $post) {
+            $content .= "- [" . esc_html(get_the_title($post)) . "] (" . esc_html(get_permalink($post)) . ")\n";
+        }
+
+        $content .= "\n# Pages\n\n";
+        foreach ($pages as $page) {
+            $content .= "- [" . esc_html(get_the_title($page)) . "] (" . esc_html(get_permalink($page)) . ")\n";
+        }
+
+        // Add WooCommerce products if WooCommerce is active
+        if (class_exists('WooCommerce')) {
+            $args = array(
+                'post_type'      => "product",
+                'post_status'    => 'publish',
+                'fields'         => 'ids',
+                'posts_per_page' => -1, // Get all products
+            );
+            $products = get_posts($args);
+
+            if (!empty($products)) {
+                $content .= "\n# Products\n\n";
+                foreach ($products as $product) {
+                    $content .= "- [" . esc_html(get_the_title($product)) . "] (" . esc_html(get_permalink($product)) . ")\n";
+                }
+            }
+        }
+
+        file_put_contents($llms_file, $content);
     }
 }
 

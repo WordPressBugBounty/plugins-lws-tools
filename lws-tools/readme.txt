@@ -2,8 +2,8 @@
 Contributors: aurelienlws
 Tags: LWS, Security, Admin, Optimisation
 Requires at least: 5.0
-Tested up to: 6.7
-Stable tag: 2.4.9
+Tested up to: 6.8
+Stable tag: 2.5
 Requires PHP: 7.3
 Author : LWS
 Author URI: https://www.lws.fr/
@@ -188,6 +188,10 @@ There are 3 different ways to install LWS Tools (as with any other wordpress.org
 7. Autres outils
 
 == Changelog ==
+
+= 2.5 =
+* New design to better match with newer LWS plugins
+* Added LLM Optimization, adding a llms.txt file to your website, acting like a sitemap for IA
 
 = 2.4.8 =
 * Added a warning modal before modifying table prefix, displaying informations about what is going to happen

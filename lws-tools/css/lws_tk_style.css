@@ -1,3 +1,213 @@
+#wpcontent {
+    height: 100%;
+    padding: 0 20px;
+}
+
+img {
+    vertical-align: middle;
+}
+
+.lws_tk_main_bloc {
+    max-width: 1400px;
+    margin: auto;
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+}
+
+.lwstk_title_banner {
+    display: flex;
+    align-items: stretch;
+    margin: 30px 0;
+    gap: 30px;
+    z-index: 16;
+    position: relative;
+}
+
+.lwstk_top_banner {
+    display: flex;
+    align-items: center;
+    padding: 20px 30px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 0px 15px #00000012;
+    border-radius: 10px;
+    gap: 30px;
+}
+
+.lwstk_top_banner_text {
+    gap: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.lwstk_top_title_block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 10px;
+}
+
+.lwstk_top_title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.lwstk_top_title > span:first-child {
+    font: normal normal bold 26px/36px sans-serif;
+    font-family: Poppins, sans-serif;
+    letter-spacing: 0px;
+    color: #1D2327;
+}
+
+.lwstk_top_title > span:nth-child(2) {
+    font: normal normal normal 13px/23px sans-serif;
+    font-family: Poppins, sans-serif;
+    letter-spacing: 0px;
+    color: #1D2327;
+}
+
+span.logo_lws {
+    background: url("../images/lws_logo_fr.svg");
+    background-size: 122px 24px;
+    width: 122px;
+    height: 24px;
+}
+
+.lwstk_top_description {
+    font: normal normal normal 13px/23px sans-serif;
+    font-family: Poppins, sans-serif;
+    letter-spacing: 0px;
+    color: #1D2327;
+}
+
+.lwstk_top_banner_right {
+    max-width: 330px;
+    width: 100%;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 0px 15px #00000012;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 30px;
+}
+
+.lwstk_rate_block {
+    background: #E9F4FD 0% 0% no-repeat padding-box;
+    border-radius: 10px;
+    font: normal normal 600 13px/23px sans-serif;
+    font-family: Poppins, sans-serif;
+    max-width: 493px;
+    width: 100%;
+    padding: 12px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.lwstk_top_code {
+    border: 1px solid #1D2327;
+    border-radius: 5px;
+    font: normal normal normal 13px/22px Poppins;
+    color: #1D2327;
+    padding: 5px 10px;
+}
+
+.lwstk_top_rateus {
+    font: normal normal 600 13px/23px sans-serif;
+    font-family: Poppins, sans-serif;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 3px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid #BCD0E0;
+    padding-bottom: 10px;
+}
+
+.lwstk_bottom_rateus {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 3px;
+    flex-wrap: wrap;
+    padding-top: 13px;
+    font: normal normal normal 13px/22px Poppins, sans-serif;
+    color: #1D2327;
+}
+
+a.link_to_support {
+    text-decoration: underline;
+    font: normal normal normal 13px/22px Poppins;
+    color: #2893E9;
+}
+
+a.link_to_rating_with_stars {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 3px;
+    flex-wrap: nowrap;
+    text-decoration: underline;
+    color: #006EDC;
+}
+
+.lwstk_stars {
+    text-decoration: underline;
+    color: #F5AA00;
+}
+
+.lwstk_top_banner_right_top {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.lwstk_top_banner_right_bottom {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.lwstk_top_banner_right_bottom > label {
+    border: 1px solid #1D2327;
+    border-radius: 5px;
+    padding: 8px 10px;
+    height: fit-content;
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+}
+
+.lwstk_top_banner_right_bottom > label:hover {
+    background-color: #fbfbfb;
+}
+
+.lwstk_top_banner_right_bottom > a {
+    background: #1B2E4B 0% 0% no-repeat padding-box;
+    border-radius: 22px;
+    font: normal normal 600 14px/24px sans-serif;
+    font-family: Poppins, sans-serif;
+    color: #FFFFFF;
+    padding: 10px 20px;
+}
+
+.lwstk_top_banner_right_bottom > a:hover {
+    color: #FFFFFF;
+    text-decoration: none;
+    background: #121d2f 0% 0% no-repeat padding-box;
+    cursor: pointer;
+}
+
+
+
 body.wp-admin {
     background: #f0f0f1;
     color: #3c434a;
@@ -681,7 +891,6 @@ table.dataTable thead td {
     box-shadow: 0px 1px 1px #00000029;
     font-size: 16px;
     line-height: 26px;
-    margin-left: 1%;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
@@ -691,7 +900,6 @@ table.dataTable thead td {
     box-shadow: 0px 1px 1px #00000029;
     font-size: 16px;
     line-height: 26px;
-    margin-left: 1%;
     padding-bottom: 30px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
@@ -699,8 +907,6 @@ table.dataTable thead td {
 
 .lws_tk_list_block_content {
     flex: 100%;
-    margin-right: 30px;
-
 }
 
 .lws_tk_list_block_ad {
@@ -712,7 +918,6 @@ table.dataTable thead td {
 .lws_tk_main_content {
     display: flex;
     flex-direction: row;
-    margin-right: 2%;
 }
 
 .lws_tk_button_ad_block {
@@ -769,7 +974,6 @@ table.dataTable thead td {
 
 .tab_lws_tk {
     background-color: white;
-    margin-left: 1%;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
@@ -946,55 +1150,39 @@ table.dataTable thead td {
 
 /*END*/
 
-/*CSS Responsive*/
-@media only screen and (max-width: 1400px) {
-    /* .lws_tk_subtitlebloc,
-    .lws_tk_adbloc{
-        margin-right:140px;
-        margin-left:120px;
-    }
-    
-    .lws_tk_main_content{
-        margin-right:140px;
-    }
-    .lws_tk_configpage_plugin,
-    .lws_tk_configpage,
-    .tab_lws_tk{
-        margin-left:120px;
-    } */
-}
 
 @media only screen and (max-width: 1250px) {
     .lws_tk_main_content {
         flex-direction: column;
     }
 
-    .lws_tk_list_block_content {
-        margin-right: 0;
-    }
-
     .lws_tk_list_block_ad {
-        /* margin-left: 80px; */
-        /* margin-right: unset; */
         margin-top: 30px;
     }
 
-
-    /* .lws_tk_subtitlebloc,
-    .lws_tk_adbloc{
-        margin-right:100px;
-        margin-left:80px;
+    .lwstk_top_title_block {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: nowrap;
+        gap: 10px;
+        flex-direction: column;
     }
-    
-    .lws_tk_main_content{
-        margin-right:100px;
-    }
-    .lws_tk_configpage_plugin,
-    .lws_tk_configpage,
-    .tab_lws_tk{
-        margin-left:80px;
-    } */
 }
+
+@media only screen and (max-width: 1200px) {
+    .lwstk_title_banner {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .lwstk_top_banner_right {
+        max-width: none;
+        justify-content: center;
+    }
+}
+
 
 @media only screen and (max-width: 1060px) {
     .lws_tk_adbloc_left {
@@ -1043,6 +1231,10 @@ table.dataTable thead td {
     .lws_tk_titre_inputs {
         margin-bottom: 1em;
     }
+
+    .lwstk_rate_block {
+        width: initial;
+    }
 }
 
 @media only screen and (max-width: 650px) {
@@ -1056,26 +1248,8 @@ table.dataTable thead td {
     }
 
     .lws_tk_list_block_ad {
-        /* margin-left: 20px; */
-        /* margin-right: unset; */
         margin-top: 30px;
     }
-
-    /*     
-    .lws_tk_subtitlebloc,
-    .lws_tk_adbloc{
-        margin-right:40px;
-        margin-left:20px;
-    }
-    
-    .lws_tk_main_content{
-        margin-right:40px;
-    }
-    .lws_tk_configpage_plugin,
-    .lws_tk_configpage,
-    .tab_lws_tk{
-        margin-left:20px;
-    } */
 }
 
 @media only screen and (max-width: 550px) {
@@ -1089,6 +1263,23 @@ table.dataTable thead td {
 
     .lws_tk_button_opti_save.opti {
         margin-bottom: 25px;
+    }
+
+    .lwstk_top_banner {
+        flex-direction: column;
+    }
+
+    .lwstk_activate_plugin {
+        padding: 30px;
+    }
+
+    .lwstk_activate_plugin {
+        flex-wrap: wrap;
+    }
+
+    .lwstk_top_banner_right_bottom {
+        flex-wrap: wrap;
+        justify-content: center;
     }
 
 }
@@ -1109,25 +1300,8 @@ table.dataTable thead td {
     }
 
     .lws_tk_list_block_ad {
-        /* margin-left: 0px; */
-        /* margin-right: unset; */
         margin-top: 30px;
     }
-
-    /* .lws_tk_subtitlebloc,
-    .lws_tk_adbloc{
-        margin-right:10px;
-        margin-left:0px;
-    }
-    
-    .lws_tk_main_content{
-        margin-right:10px;
-    }
-    .lws_tk_configpage_plugin,
-    .lws_tk_configpage,
-    .tab_lws_tk{
-        margin-left:0px;
-    } */
 }
 
 @media only screen and (max-width: 335px) {
