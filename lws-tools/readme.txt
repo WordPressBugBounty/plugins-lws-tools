@@ -3,7 +3,7 @@ Contributors: aurelienlws
 Tags: LWS, Security, Admin, Optimisation
 Requires at least: 5.0
 Tested up to: 6.8
-Stable tag: 2.5
+Stable tag: 2.6
 Requires PHP: 7.3
 Author : LWS
 Author URI: https://www.lws.fr/
@@ -23,7 +23,7 @@ You can access and change several parameters, get informations on your database 
 
 = Notifications =
 
-Find an improved notification center allowing you to see at a glance what to update, what to delete, correct or adjust. 
+Find an improved notification center allowing you to see at a glance what to update, what to delete, correct or adjust.
 
 * Status of updates to the WordPress version, plugins, themes and translations.
 * Unused plugins and themes can be removed in one click..
@@ -189,6 +189,10 @@ There are 3 different ways to install LWS Tools (as with any other wordpress.org
 
 == Changelog ==
 
+= 2.6 =
+* Added a ChatGPT Bot on the admin pages (only for administrators) to answer questions you may have on your website
+* Minor CSS updates
+
 = 2.5 =
 * New design to better match with newer LWS plugins
 * Added LLM Optimization, adding a llms.txt file to your website, acting like a sitemap for IA
@@ -224,7 +228,7 @@ There are 3 different ways to install LWS Tools (as with any other wordpress.org
 * Removed unused tab
 * Bug fixed where some plugins could not be activated from "Our plugins"
 
-= 2.2 = 
+= 2.2 =
 * Preventive measures for potential security issues
 * Added new plugins to "Our plugins"
 

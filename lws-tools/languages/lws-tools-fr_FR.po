@@ -1005,3 +1005,30 @@ msgstr "<b>-15%</b> sur nos <a href=\"https://www.lws.fr/support/\" target=\"_bl
 
 msgid "A <a href=\"https://wordpress.org/support/plugin/lws-tools/reviews/#new-post\" target=\"_blank\" class=\"link_to_rating_with_stars\"><div class=\"lwstk_stars\">★★★★★</div> rating</a> will motivate us a lot."
 msgstr "Une <a href=\"https://wordpress.org/support/plugin/lws-tools/reviews/#new-post\" target=\"_blank\" class=\"link_to_rating_with_stars\"> note <div class=\"lwstk_stars\">★★★★★</div></a> nous motivera beaucoup."
+
+msgid "AI Management"
+msgstr "Gestion IA"
+
+msgid "Ethan is your own virtual assistant, here to help you out while building your website. Ask him anything you want his help with, from creating a post to troubleshooting issues."
+msgstr "Ethan est votre propre assistant virtuel, ici pour vous aider à construire votre site. Demandez-lui tout ce dont vous avez besoin, de la création d'un article à la résolution de problèmes."
+
+msgid "Activate Ethan, the AI assistant"
+msgstr "Activer Ethan, l'assistant IA"
+
+msgid "Ethan (AI Assistant)"
+msgstr "Ethan (Assistant IA)"
+
+msgid "IA Chatbot state updated successfully."
+msgstr "État du chatbot IA mis à jour avec succès."
+
+msgid "Error updating IA Chatbot state."
+msgstr "Erreur lors de la mise à jour de l'état du chatbot IA."
+
+msgid "Unknown error while updating IA Chatbot state."
+msgstr "Erreur inconnue lors de la mise à jour de l'état du chatbot IA."
+
+msgid "You have reached your quota (100 messages) for this month."
+msgstr "Vous avez atteint votre quota (100 messages) pour ce mois."
+
+msgid "Chatbot is only available on LWS hostings."
+msgstr "Le chatbot est uniquement disponible sur les hébergements LWS."

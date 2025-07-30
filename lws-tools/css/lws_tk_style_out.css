@@ -5,11 +5,11 @@ div.lwstk_review_block_general{
 }
 
 div.lwstk_review_block_general.animationFadeOut{
-    animation: fadeOut 2s;    
+    animation: fadeOut 2s;
 }
 
 @keyframes fadeOut{
-    0% { 
+    0% {
         right:0px;
         opacity: 1;
     }

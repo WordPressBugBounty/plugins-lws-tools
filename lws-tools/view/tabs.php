@@ -30,6 +30,7 @@ $tabs_list = array(
     //array('antivirus', __('Antivirus', 'lws-tools')),
     array('mysql', __('MySQL Logs', 'lws-tools')),
     array('tools', __('Other Tools', 'lws-tools')),
+    array('ia', __('Ethan (AI Assistant)', 'lws-tools')),
     array('plugins', __('Our plugins', 'lws-tools')),
 )
 // // //
@@ -95,6 +96,9 @@ $tabs_list = array(
                         aria-controls="<?php echo esc_attr($tab[0]);?>"
                         aria-selected="<?php echo $tab[0] == 'notifications' ? esc_attr('true') : esc_attr('false'); ?>"
                         tabindex="<?php echo $tab[0] == 'notifications' ? esc_attr('0') : '-1'; ?>">
+                        <?php if ($tab[0] == "ia") : ?>
+                            <img src="<?php echo esc_url(plugins_url('images/lws_ia.svg', __DIR__)) ?>" alt="IA Icon" width="20px" height="20px">
+                        <?php endif; ?>
                         <?php echo esc_html($tab[1]); ?>
                     </button>
                     <?php endforeach ?>
@@ -128,6 +132,8 @@ $tabs_list = array(
     </div>
 </div>
 
+<div id="lws_tk_popup_alerting"></div>
+
 <script>
     function lws_tk_copy_clipboard(input) {
         navigator.clipboard.writeText(input.innerText.trim());
@@ -138,6 +144,122 @@ $tabs_list = array(
             "<?php esc_html_e('Copied!', 'lws-tools');?>" +
             "</div>");
     }
+
+    // Execute the function callback after ms milliseconds unless delay() is called again
+function delay(callback, ms) {
+    var timer = 0;
+    return function() {
+        var context = this,
+            args = arguments;
+        clearTimeout(timer);
+        timer = setTimeout(function() {
+            callback.apply(context, args);
+        }, ms || 0);
+    };
+}
+
+function callPopup(type, content) {
+    // Get the element containing all popups
+    let alerting = document.getElementById('lws_tk_popup_alerting');
+    if (alerting == null) {
+        console.log(JSON.stringify({
+            'code': "POPUP_FAIL",
+            'data': "Failed to find alerting"
+        }));
+        return -1;
+    }
+
+    if (content == null) {
+        console.log(JSON.stringify({
+            'code': "POPUP_FAIL",
+            'data': "Failed to find content"
+        }));
+        return -1;
+    }
+
+    if (type == null) {
+        console.log(JSON.stringify({
+            'code': "POPUP_FAIL",
+            'data': "Failed to find type"
+        }));
+        return -1;
+    }
+
+    // No more than 4 popups at a time. Remove the oldest one
+    if (alerting.children.length > 4) {
+        let amount_popups = alerting.children;
+        let last = amount_popups.item(amount_popups.length - 1);
+        if (last != null) {
+            jQuery(last).animate({
+                'left': '150%'
+            }, 500, function() {
+                last.remove();
+            });
+        }
+    }
+
+    let number = alerting.children.length ?? 5;
+
+    alerting.insertAdjacentHTML('afterbegin', `<div class="lws_tk_information_popup" style="left: 150%;" id="lws_tk_information_popup_` + number + `"></div>`);
+    let popup = document.getElementById('lws_tk_information_popup_' + number);
+
+    if (popup == null) {
+        console.log(JSON.stringify({
+            'code': "POPUP_NOT_CREATED",
+            'data': "Failed to create the popup"
+        }));
+        return -1;
+    }
+
+    animation = ``;
+    switch (type) {
+        case 'success':
+            animation = `<svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" /><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" /></svg>`;
+            break;
+        case 'error':
+            animation = `
+            <svg class="crossmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"> <circle class="crossmark__circle" cx="26" cy="26" r="25" fill="none" stroke="red" stroke-width="2"></circle> <path class="crossmark__cross" fill="none" stroke="red" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="36" stroke-dashoffset="36" d="M16 16 36 36 M36 16 16 36"> <animate attributeName="stroke-dashoffset" from="36" to="0" dur="0.5s" fill="freeze" /> </path></svg>`
+            break;
+        case 'warning':
+            animation = `<svg class="exclamation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"> <circle class="exclamation__circle" cx="26" cy="26" r="25" fill="none" stroke="#FFD700" stroke-width="2"></circle> <text class="exclamation__mark" x="26" y="30" font-size="26" font-family="Arial" text-anchor="middle" fill="#FFD700" dominant-baseline="middle">!</text> <style> .exclamation__mark { animation: blink 1s ease-in-out 3; } @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } } </style> </svg>`;
+            break;
+        default:
+            animation = `<svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" /><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" /></svg>`;
+            break;
+    }
+
+    popup.insertAdjacentHTML('beforeend', `
+        <div class="lws_tk_information_popup_animation">` + animation + `</div>
+        <div class="lws_tk_information_popup_content">` + content + `</div>
+        <div id="lws_tk_close_popup_` + number + `" class="lws_tk_information_popup_close"><img src="<?php echo esc_url(plugins_url('images/fermer.svg', __DIR__)) ?>" alt="close button" width="10px" height="10px">
+    `)
+
+    jQuery(popup).animate({
+        'left': '0%'
+    }, 500);
+
+    popup.classList.add('popup_' + type);
+
+    let popup_button = document.getElementById('lws_tk_close_popup_' + number);
+    if (popup_button != null) {
+        popup_button.addEventListener('click', function() {
+            this.parentNode.remove();
+        })
+    }
+
+    popup.addEventListener('mouseover', delay(function() {
+        if (popup.matches(':hover')) {
+            return 0;
+        }
+        jQuery(this).animate({
+            'left': '150%'
+        }, 500, function() {
+            this.remove();
+        });
+    }, 5000));
+
+    popup.dispatchEvent(new Event('mouseover'));
+}
 </script>
 
 

@@ -4,7 +4,7 @@
  * Plugin Name:       LWS Tools
  * Plugin URI:        https://www.lws.fr/
  * Description:       Optimize and modify your website's parameters
- * Version:           2.5
+ * Version:           2.6
  * Author:            LWS
  * Author URI:        https://www.lws.fr
  * Tested up to:      6.8
@@ -20,6 +20,19 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+if (!function_exists('wp_get_wp_version')) {
+    function wp_get_wp_version() {
+        static $wp_version;
+
+        if ( ! isset( $wp_version ) ) {
+            require ABSPATH . WPINC . '/version.php';
+        }
+
+        return $wp_version;
+    }
+}
+
+
 define('LWS_TK_URL', plugin_dir_url(__FILE__));
 define('LWS_TK_DIR', plugin_dir_path(__FILE__));
 require_once(ABSPATH . '/wp-admin/includes/class-wp-upgrader.php');
@@ -30,6 +43,10 @@ require_once(ABSPATH . '/wp-admin/includes/class-language-pack-upgrader.php');
 
 if (!function_exists('get_plugin_data')) {
     require_once(ABSPATH . 'wp-admin/includes/plugin.php');
+}
+
+if (!class_exists('IaSupport')) {
+    require_once 'ia/ia_support.php';
 }
 
 // Remove all notices and popup while on the config page
@@ -45,6 +62,7 @@ add_action('admin_notices', function () {
 add_action('init', 'lws_tk_traduction');
 function lws_tk_traduction()
 {
+    $ia = new IaSupport();
     load_plugin_textdomain('lws-tools', false, dirname(plugin_basename(__FILE__)) . '/languages');
 }
 
@@ -91,7 +109,9 @@ function lws_tk_uninstalling_plugin()
 add_action('admin_enqueue_scripts', 'lws_tk_scripts');
 function lws_tk_scripts()
 {
-    if (get_current_screen()->base == ('toplevel_page_lws-tk-config')) {
+    wp_enqueue_style('lws_tools_support_css', LWS_TK_URL . "css/lws_tools_support_css.css");
+
+    if (get_current_screen()->base == ('toplevel_page_lws-tk-config') || get_current_screen()->base == ('lws-tools_page_lws-tk-config-ia')) {
         wp_enqueue_style('lws_tk-css', LWS_TK_URL . "css/lws_tk_style.css");
         wp_enqueue_style('lws_tk-dt-css', LWS_TK_URL . "DataTables/datatables.min.css");
         wp_enqueue_script('lws_tk-dt', LWS_TK_URL . "DataTables/datatables.min.js");
@@ -1017,6 +1037,53 @@ function lws_tk_disable_custom_rest_endpoints($endpoints)
 ///END OPTIMISATIONS///
 
 ////AJAX////
+
+add_action('wp_ajax_update_ia_chatbot_state', 'lws_tk_update_ia_chatbot_state');
+function lws_tk_update_ia_chatbot_state()
+{
+    check_ajax_referer('ia_chatbot_nonce', '_ajax_nonce');
+
+    if (!get_option('lws_tk_ia_chatbot_state')) {
+        update_option('lws_tk_ia_chatbot_state', true);
+    } else {
+        delete_option('lws_tk_ia_chatbot_state');
+    }
+
+    wp_die(json_encode(['code' => "SUCCESS", 'data' => "Chatbot state updated"]));
+}
+
+add_action('wp_ajax_lws_tools_on_message_sent', 'lws_tk_lws_tools_on_message_sent');
+function lws_tk_lws_tools_on_message_sent()
+{
+    check_ajax_referer('lws_tools_ratelimit', '_ajax_nonce');
+    $user_ip = isset($_SERVER['HTTP_X_REAL_IP']) ? $_SERVER['HTTP_X_REAL_IP'] : '127.0.0.1';
+
+    $chatbot_data = get_option('lws_tools_chatbot_data', []);
+    isset($chatbot_data[$user_ip]) or $chatbot_data[$user_ip] = ['amount' => 0, 'date' => time()];
+
+    // If the last reset happened 30 days ago or more, reset right now
+    if ($chatbot_data[$user_ip]['date'] < time() - (30 * 24 * 60 * 60)) {
+        $chatbot_data[$user_ip] = ['amount' => 0, 'date' => time()];
+    }
+
+    if ($chatbot_data[$user_ip]['amount'] >= 100) {
+        wp_die(json_encode(['code' => "LIMIT", 'data' => "You have reached the maximum number of uses for the AI Chatbot. Please try again next month."]));
+    }
+
+    // Add 1 use of the AI Chatbot
+    $chatbot_data[$user_ip]['amount']++;
+
+    update_option('lws_tools_chatbot_data', $chatbot_data);
+
+    if ($chatbot_data[$user_ip]['amount'] > 100) {
+        wp_die(json_encode(['code' => "LIMIT_JUST_REACHED", 'data' => "You have reached the maximum number of uses for the AI Chatbot. Please try again next month."]));
+    }
+
+    wp_die(json_encode(['code' => "SUCCESS", 'data' => "Chatbot quota updated", 'amount' => $chatbot_data[$user_ip]['amount']]));
+}
+
+
+
 
 // AJAX PART FOR THE DOWNLOAD //
 /*AJAX DOWNLOAD AND ACTIVATE PLUGINS*/
