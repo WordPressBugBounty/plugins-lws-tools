@@ -1009,14 +1009,11 @@ msgstr "Une <a href=\"https://wordpress.org/support/plugin/lws-tools/reviews/#ne
 msgid "AI Management"
 msgstr "Gestion IA"
 
-msgid "Ethan is your own virtual assistant, here to help you out while building your website. Ask him anything you want his help with, from creating a post to troubleshooting issues."
-msgstr "Ethan est votre propre assistant virtuel, ici pour vous aider à construire votre site. Demandez-lui tout ce dont vous avez besoin, de la création d'un article à la résolution de problèmes."
+msgid "Activate WPilot, the AI assistant"
+msgstr "Activer WPilot, l'assistant IA"
 
-msgid "Activate Ethan, the AI assistant"
-msgstr "Activer Ethan, l'assistant IA"
-
-msgid "Ethan (AI Assistant)"
-msgstr "Ethan (Assistant IA)"
+msgid "WPilot (AI Assistant)"
+msgstr "WPilot (Assistant IA)"
 
 msgid "IA Chatbot state updated successfully."
 msgstr "État du chatbot IA mis à jour avec succès."
@@ -1032,3 +1029,54 @@ msgstr "Vous avez atteint votre quota (100 messages) pour ce mois."
 
 msgid "Chatbot is only available on LWS hostings."
 msgstr "Le chatbot est uniquement disponible sur les hébergements LWS."
+
+msgid "WPilot, your personal WordPress expert"
+msgstr "WPilot, votre expert WordPress personnel"
+
+msgid "WPilot is your dedicated AI assistant for WordPress. He automatically analyzes your site, plugins, and theme to provide personalized advice. He guides you through creating, updating, and optimizing your site while helping you troubleshoot common issues. Enjoy a true co-pilot for building and evolving your site with ease."
+msgstr "WPilot est votre assistant IA dédié à WordPress. Il analyse automatiquement votre site, vos plugins et votre thème pour vous fournir des conseils personnalisés. Il vous guide dans la création, la mise à jour et l'optimisation de votre site tout en vous aidant à résoudre les problèmes courants. Profitez d'un véritable copilote pour construire et faire évoluer votre site en toute simplicité."
+
+msgid "Assistant Unavailable"
+msgstr "Assistant indisponible"
+
+msgid "The intelligent assistant WPilot is reserved for customers with LWS hosting."
+msgstr "L'assistant intelligent WPilot est réservé aux clients disposant d'un hébergement LWS."
+
+msgid "WPilot is your WordPress co-pilot:"
+msgstr "WPilot est votre copilote WordPress :"
+
+msgid "Analyzes your site, extensions and theme"
+msgstr "Il analyse votre site, vos extensions et votre thème"
+
+msgid "Helps you create, maintain and optimize your site"
+msgstr "Il vous aide à créer, maintenir et optimiser votre site"
+
+msgid "Provides personalized advice and solves common problems"
+msgstr "Il vous propose des conseils personnalisés et résout les problèmes courants"
+
+msgid "Get WPilot with LWS WordPress hosting"
+msgstr "Obtenez WPilot avec l'hébergement WordPress LWS"
+
+msgid "The best WordPress host to create your site easily."
+msgstr "Le meilleur hébergeur WordPress pour créer votre site facilement."
+
+msgid "1-click installation – Ultra-fast and reliable WordPress"
+msgstr "Installation en 1 clic – WordPress ultra rapide et fiable"
+
+msgid "Free domain (.fr, .com...)"
+msgstr "Domaine gratuit (.fr, .com…)"
+
+msgid "Secure site + 100% SSD storage"
+msgstr "Site sécurisé + stockage 100 % SSD"
+
+msgid "AI, Divi Builder, Elegant Themes included"
+msgstr "IA, Divi Builder, Elegant Themes inclus"
+
+msgid "Only €2.99/month instead of €4.99"
+msgstr "Seulement 2,99 €/mois au lieu de 4,99 €"
+
+msgid "Take advantage of the LWS WordPress offer"
+msgstr "Profiter de l'offre WordPress LWS"
+
+msgid "Available only with LWS Hostings"
+msgstr "Disponible uniquement avec les hébergements LWS"

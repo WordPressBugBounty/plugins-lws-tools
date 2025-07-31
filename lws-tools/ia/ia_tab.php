@@ -1,5 +1,10 @@
 <?php
 $arr = array('strong' => array());
+
+$is_lws = false;
+if (isset($_SERVER['lwscache'])) {
+    $is_lws = true;
+}
 ?>
 
 <!-- Beginning main content block -->
@@ -58,7 +63,7 @@ $arr = array('strong' => array());
                         <label class="lws_tk_ia_label" for=''>
                             <?php esc_html_e('Activate the IA Chatbot', 'lws-tools'); ?>
                             <label class="mab_mml_ttbt_td_switch">
-                                <input class="mab_mml_ttbt_input" name="ia_chatbot_state" id="ia_chatbot_state" type="checkbox" <?php echo (get_option('lws_tk_ia_chatbot_state', false) ? '' : 'checked'); ?>>
+                                <input class="mab_mml_ttbt_input" name="ia_chatbot_state" id="ia_chatbot_state" type="checkbox" <?php echo (get_option('lws_tk_ia_chatbot_state', false) || !$is_lws) ? '' : 'checked'; ?>>
                                 <span class="mab_mml_ttbt_td_s_slider round"></span>
                             </label>
                         </label>

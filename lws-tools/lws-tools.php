@@ -4,7 +4,7 @@
  * Plugin Name:       LWS Tools
  * Plugin URI:        https://www.lws.fr/
  * Description:       Optimize and modify your website's parameters
- * Version:           2.6
+ * Version:           2.6.1
  * Author:            LWS
  * Author URI:        https://www.lws.fr
  * Tested up to:      6.8

@@ -2,7 +2,12 @@
 
 class IaSupport {
     public function __construct() {
-        if (!get_option('lws_tk_ia_chatbot_state', false)) {
+        $is_lws = false;
+        if (isset($_SERVER['lwscache'])) {
+            $is_lws = true;
+        }
+
+        if (!get_option('lws_tk_ia_chatbot_state', false) && $is_lws) {
             add_action('admin_footer', [$this, 'add_support_button']);
         }
     }

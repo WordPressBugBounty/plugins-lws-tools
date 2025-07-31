@@ -3,7 +3,7 @@ Contributors: aurelienlws
 Tags: LWS, Security, Admin, Optimisation
 Requires at least: 5.0
 Tested up to: 6.8
-Stable tag: 2.6
+Stable tag: 2.6.1
 Requires PHP: 7.3
 Author : LWS
 Author URI: https://www.lws.fr/
@@ -20,6 +20,10 @@ Released under the terms of the GNU General Public License.
 
 With LWS Tools, get a hold on various <strong>tools and options to optimize your website</strong>. From deactivating emotes or hiding sensible informations to deactivating REST API!
 You can access and change several parameters, get informations on your database and your server and even more.
+
+= WPilot - Your WordPress AI Assistant =
+
+Meet <strong>WPilot</strong>, your dedicated AI assistant for WordPress, available exclusively with LWS hosting. WPilot automatically analyzes your site, plugins, and theme to provide personalized advice and guidance. Whether you're creating, updating, or optimizing your website, WPilot acts as your co-pilot, helping you troubleshoot common issues and make informed decisions about your WordPress site. This intelligent assistant understands your specific setup and offers tailored recommendations to enhance your website's performance and functionality.
 
 = Notifications =
 
@@ -188,6 +192,10 @@ There are 3 different ways to install LWS Tools (as with any other wordpress.org
 7. Autres outils
 
 == Changelog ==
+
+= 2.6.1 =
+* Changed IA name
+* Changed not-compatible notification
 
 = 2.6 =
 * Added a ChatGPT Bot on the admin pages (only for administrators) to answer questions you may have on your website

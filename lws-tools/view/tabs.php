@@ -30,7 +30,7 @@ $tabs_list = array(
     //array('antivirus', __('Antivirus', 'lws-tools')),
     array('mysql', __('MySQL Logs', 'lws-tools')),
     array('tools', __('Other Tools', 'lws-tools')),
-    array('ia', __('Ethan (AI Assistant)', 'lws-tools')),
+    array('ia', __('WPilot (AI Assistant)', 'lws-tools')),
     array('plugins', __('Our plugins', 'lws-tools')),
 )
 // // //
