@@ -4,7 +4,7 @@
  * Plugin Name:       LWS Tools
  * Plugin URI:        https://www.lws.fr/
  * Description:       Optimize and modify your website's parameters
- * Version:           2.6.1
+ * Version:           2.6.1.5
  * Author:            LWS
  * Author URI:        https://www.lws.fr
  * Tested up to:      6.8
@@ -109,17 +109,21 @@ function lws_tk_uninstalling_plugin()
 add_action('admin_enqueue_scripts', 'lws_tk_scripts');
 function lws_tk_scripts()
 {
-    wp_enqueue_style('lws_tools_support_css', LWS_TK_URL . "css/lws_tools_support_css.css");
+    // Get plugin version for cache busting
+    $plugin_data = get_plugin_data(__FILE__);
+    $version = $plugin_data['Version'];
+
+    wp_enqueue_style('lws_tools_support_css', LWS_TK_URL . "css/lws_tools_support_css.css", array(), $version);
 
     if (get_current_screen()->base == ('toplevel_page_lws-tk-config') || get_current_screen()->base == ('lws-tools_page_lws-tk-config-ia')) {
-        wp_enqueue_style('lws_tk-css', LWS_TK_URL . "css/lws_tk_style.css");
-        wp_enqueue_style('lws_tk-dt-css', LWS_TK_URL . "DataTables/datatables.min.css");
-        wp_enqueue_script('lws_tk-dt', LWS_TK_URL . "DataTables/datatables.min.js");
+        wp_enqueue_style('lws_tk-css', LWS_TK_URL . "css/lws_tk_style.css", array(), $version);
+        wp_enqueue_style('lws_tk-dt-css', LWS_TK_URL . "DataTables/datatables.min.css", array(), $version);
+        wp_enqueue_script('lws_tk-dt', LWS_TK_URL . "DataTables/datatables.min.js", array(), $version);
         wp_enqueue_style('lws_sms-Poppins', 'https://fonts.googleapis.com/css?family=Poppins');
-        wp_enqueue_style('lwsop_bootstrap_css', LWS_TK_URL . "css/bootstrap.css");
-        wp_enqueue_script('lwsop_bootstrap_js', LWS_TK_URL . "js/bootstrap.min.js");
+        wp_enqueue_style('lwsop_bootstrap_css', LWS_TK_URL . "css/bootstrap.css", array(), $version);
+        wp_enqueue_script('lwsop_bootstrap_js', LWS_TK_URL . "js/bootstrap.min.js", array(), $version);
     } else {
-        wp_enqueue_style('lws_tk_css_out', LWS_TK_URL . "css/lws_tk_style_out.css");
+        wp_enqueue_style('lws_tk_css_out', LWS_TK_URL . "css/lws_tk_style_out.css", array(), $version);
         if (!get_transient('lwstk_remind_me') && !get_option('lwstk_do_not_ask_again')) {
             add_action('admin_notices', 'lwstk_review_ad_plugin');
         }
