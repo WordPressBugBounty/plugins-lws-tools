@@ -19,35 +19,88 @@ if (!isset($user_data['amount']) || $user_data['amount'] >= 100) {
 }
 ?>
 
-<?php if ($accessible_chatbot && $website_is_lws) : ?>
-<div id="opengpt_chatbot_element">
+<div id="lwstools_opengpt_chatbot_block">
+    <?php if ($accessible_chatbot && $website_is_lws) : ?>
+    <div id="opengpt_chatbot_element">
+        <!-- Hide/Show chatbot toggle button -->
+        <button id="toggle_chatbot_visibility"
+                style="z-index: 10000; margin-right: 6px; margin-bottom: 6px; position: fixed; right: 108px; bottom: 36px; width: 40px; height: 40px; border: 2px solid #e2e8f0; border-radius: 8px; background: white; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: right 0.3s ease;"
+                title="<?php esc_html_e('Hide/Show chatbot', 'lws-tools'); ?>">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+        </button>
 
-    <iframe src="https://www.openassistantgpt.io/embed/cmdol2mhl0003mblafzjcm8c9/button?chatbox=false"
-    style="z-index: 50; margin-right: 6px; margin-bottom: 6px; position: fixed; right: 36px; bottom: 36px; width: 60px; height: 60px; border: 0; border: 2px solid #e2e8f0; border-radius: 50%; color-scheme: none; background: none;box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);"
-    id="openassistantgpt-chatbot-button-iframe"></iframe>
+        <iframe src="https://www.openassistantgpt.io/embed/cmdol2mhl0003mblafzjcm8c9/button?chatbox=false"
+        style="z-index: 10000; margin-right: 6px; margin-bottom: 6px; position: fixed; right: 36px; bottom: 36px; width: 60px; height: 60px; border: 0; border: 2px solid #e2e8f0; border-radius: 50%; color-scheme: none; background: none;box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); transition: opacity 0.3s ease, transform 0.3s ease;"
+        id="openassistantgpt-chatbot-button-iframe"></iframe>
 
 
-    <!-- This chatbot is build using https://openassistantgpt.io/ -->
-    <iframe
-        src="https://www.openassistantgpt.io/embed/cmdol2mhl0003mblafzjcm8c9/window?chatbox=false&withExitX=true&clientSidePrompt=<?php echo $encoded_prompt; ?>"
-        style="z-index: 50; margin-right: 6px; margin-bottom: 98px; display: none; position: fixed; right: 0; bottom: 0; pointer-events: none; overflow: hidden; height: 65vh; border: 2px solid #e2e8f0; border-radius: 0.375rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); max-width: 700px; width: stretch;"
-        allow="clipboard-read; clipboard-write"
-        allowfullscreen id="openassistantgpt-chatbot-iframe">
-    </iframe>
+        <!-- This chatbot is build using https://openassistantgpt.io/ -->
+        <iframe
+            src="https://www.openassistantgpt.io/embed/cmdol2mhl0003mblafzjcm8c9/window?chatbox=false&withExitX=true&clientSidePrompt=<?php echo $encoded_prompt; ?>"
+            style="z-index: 10000; margin-right: 6px; margin-bottom: 98px; display: none; position: fixed; right: 0; bottom: 0; pointer-events: none; overflow: hidden; height: 65vh; border: 2px solid #e2e8f0; border-radius: 0.375rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); max-width: 700px; width: stretch;"
+            allow="clipboard-read; clipboard-write"
+            allowfullscreen id="openassistantgpt-chatbot-iframe">
+        </iframe>
+    </div>
+    <?php elseif (!$accessible_chatbot && $website_is_lws) : ?>
+        <div id="opengpt_chatbot_element">
+            <div id="opengpt_chatbot_deactivated" class="lws_tools_assistant_button" title="<?php esc_html_e('You have reached your quota (100 messages) for this month.', 'lws-tools'); ?>">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square" style="color: rgb(30, 73, 155);"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </div>
+        </div>
+    <?php else : ?>
+        <div id="opengpt_chatbot_element">
+            <div id="opengpt_chatbot_deactivated" class="lws_tools_assistant_button deactivated" title="<?php esc_html_e('Chatbot is only available on LWS hostings.', 'lws-tools'); ?>">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square" style="color: rgb(30, 73, 155);"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </div>
+        </div>
+    <?php endif; ?>
 </div>
-<?php elseif (!$accessible_chatbot && $website_is_lws) : ?>
-    <div id="opengpt_chatbot_element">
-        <div id="opengpt_chatbot_deactivated" class="lws_tools_assistant_button" title="<?php esc_html_e('You have reached your quota (100 messages) for this month.', 'lws-tools'); ?>">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square" style="color: rgb(30, 73, 155);"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-        </div>
-    </div>
-<?php else : ?>
-    <div id="opengpt_chatbot_element">
-        <div id="opengpt_chatbot_deactivated" class="lws_tools_assistant_button deactivated" title="<?php esc_html_e('Chatbot is only available on LWS hostings.', 'lws-tools'); ?>">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square" style="color: rgb(30, 73, 155);"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-        </div>
-    </div>
-<?php endif; ?>
+
+<script>
+    // Toggle chatbot visibility
+    (function() {
+        const toggleButton = document.getElementById('toggle_chatbot_visibility');
+        const chatbotButton = document.getElementById('openassistantgpt-chatbot-button-iframe');
+        const chatbotIframe = document.getElementById('openassistantgpt-chatbot-iframe');
+
+        if (toggleButton && chatbotButton) {
+            const isHidden = localStorage.getItem('lws_chatbot_hidden') === 'true';
+
+            if (isHidden) {
+                chatbotButton.style.opacity = '0';
+                chatbotButton.style.transform = 'scale(0)';
+                chatbotButton.style.pointerEvents = 'none';
+                toggleButton.style.right = '6px';
+                toggleButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>';
+            }
+
+            toggleButton.addEventListener('click', function() {
+                if (chatbotButton.style.opacity === '0' || chatbotButton.style.opacity === '') {
+                    chatbotButton.style.opacity = '1';
+                    chatbotButton.style.transform = 'scale(1)';
+                    chatbotButton.style.pointerEvents = 'auto';
+                    toggleButton.style.right = '108px';
+                    toggleButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>';
+                    localStorage.setItem('lws_chatbot_hidden', 'false');
+                } else {
+                    chatbotButton.style.opacity = '0';
+                    chatbotButton.style.transform = 'scale(0)';
+                    chatbotButton.style.pointerEvents = 'none';
+                    if (chatbotIframe) {
+                        chatbotIframe.style.display = 'none';
+                        chatbotIframe.contentWindow.postMessage("closeChat", "*");
+                    }
+                    toggleButton.style.right = '6px';
+                    toggleButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>';
+                    localStorage.setItem('lws_chatbot_hidden', 'true');
+                }
+            });
+        }
+    })();
+</script>
 
 <script>
     window.addEventListener("message", function(t) {

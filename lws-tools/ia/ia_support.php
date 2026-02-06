@@ -307,11 +307,16 @@ class IaSupport {
     public function get_directory_size($directory) {
         $size = 0;
         if (is_dir($directory)) {
-            $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
-            foreach ($iterator as $file) {
-                if ($file->isFile()) {
-                    $size += $file->getSize();
+            try {
+                $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory, RecursiveDirectoryIterator::SKIP_DOTS));
+                foreach ($iterator as $file) {
+                    if ($file->isFile()) {
+                        $size += $file->getSize();
+                    }
                 }
+            } catch (UnexpectedValueException $e) {
+                // Directory might be inaccessible or contain broken symlinks
+                error_log('Failed to calculate directory size for ' . $directory . ': ' . $e->getMessage());
             }
         }
         return $size;
