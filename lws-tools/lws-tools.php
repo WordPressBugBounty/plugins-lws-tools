@@ -4,7 +4,7 @@
  * Plugin Name:       LWS Tools
  * Plugin URI:        https://www.lws.fr/
  * Description:       Optimize and modify your website's parameters
- * Version:           2.6.2
+ * Version:           2.6.3
  * Author:            LWS
  * Author URI:        https://www.lws.fr
  * Tested up to:      6.9
@@ -184,6 +184,9 @@ add_action("wp_ajax_lws_tk_reminder_ajax", "lws_tk_remind_me_later");
 function lws_tk_remind_me_later()
 {
     check_ajax_referer('reminder_for_tk', '_ajax_nonce');
+    if (!current_user_can('manage_options')) {
+        wp_die(-1);
+    }
     if (isset($_POST['data'])) {
         set_transient('lwstk_remind_me', 2592000);
     }
@@ -194,6 +197,9 @@ add_action("wp_ajax_lws_tk_donotask_ajax", "lws_tk_do_not_ask");
 function lws_tk_do_not_ask()
 {
     check_ajax_referer('donotask_for_tk', '_ajax_nonce');
+    if (!current_user_can('manage_options')) {
+        wp_die(-1);
+    }
     if (isset($_POST['data'])) {
         update_option('lwstk_do_not_ask_again', true);
     }
@@ -931,7 +937,7 @@ function lws_tk_remove_password_strength_meter($hook)
 /**
  * Remove self-pingbacks in posts
  */
-if (get_option('kws_tk_no_self_ping')) {
+if (get_option('lws_tk_no_self_ping')) {
     add_action('pre_ping', 'lws_tk_no_self_ping');
 }
 function lws_tk_no_self_ping(&$links)
@@ -1046,6 +1052,9 @@ add_action('wp_ajax_update_ia_chatbot_state', 'lws_tk_update_ia_chatbot_state');
 function lws_tk_update_ia_chatbot_state()
 {
     check_ajax_referer('ia_chatbot_nonce', '_ajax_nonce');
+    if (!current_user_can('manage_options')) {
+        wp_die(-1);
+    }
 
     if (!get_option('lws_tk_ia_chatbot_state')) {
         update_option('lws_tk_ia_chatbot_state', true);
@@ -1060,30 +1069,35 @@ add_action('wp_ajax_lws_tools_on_message_sent', 'lws_tk_lws_tools_on_message_sen
 function lws_tk_lws_tools_on_message_sent()
 {
     check_ajax_referer('lws_tools_ratelimit', '_ajax_nonce');
-    $user_ip = isset($_SERVER['HTTP_X_REAL_IP']) ? $_SERVER['HTTP_X_REAL_IP'] : '127.0.0.1';
+    if (!current_user_can('manage_options')) {
+        wp_die(-1);
+    }
+    $raw_ip = isset($_SERVER['HTTP_X_REAL_IP']) ? $_SERVER['HTTP_X_REAL_IP'] : '127.0.0.1';
+    $user_ip = filter_var($raw_ip, FILTER_VALIDATE_IP) ? $raw_ip : '127.0.0.1';
+    $ip_key = hash('sha256', $user_ip);
 
     $chatbot_data = get_option('lws_tools_chatbot_data', []);
-    isset($chatbot_data[$user_ip]) or $chatbot_data[$user_ip] = ['amount' => 0, 'date' => time()];
+    isset($chatbot_data[$ip_key]) or $chatbot_data[$ip_key] = ['amount' => 0, 'date' => time()];
 
     // If the last reset happened 30 days ago or more, reset right now
-    if ($chatbot_data[$user_ip]['date'] < time() - (30 * 24 * 60 * 60)) {
-        $chatbot_data[$user_ip] = ['amount' => 0, 'date' => time()];
+    if ($chatbot_data[$ip_key]['date'] < time() - (30 * 24 * 60 * 60)) {
+        $chatbot_data[$ip_key] = ['amount' => 0, 'date' => time()];
     }
 
-    if ($chatbot_data[$user_ip]['amount'] >= 100) {
+    if ($chatbot_data[$ip_key]['amount'] >= 100) {
         wp_die(json_encode(['code' => "LIMIT", 'data' => "You have reached the maximum number of uses for the AI Chatbot. Please try again next month."]));
     }
 
     // Add 1 use of the AI Chatbot
-    $chatbot_data[$user_ip]['amount']++;
+    $chatbot_data[$ip_key]['amount']++;
 
     update_option('lws_tools_chatbot_data', $chatbot_data);
 
-    if ($chatbot_data[$user_ip]['amount'] > 100) {
+    if ($chatbot_data[$ip_key]['amount'] > 100) {
         wp_die(json_encode(['code' => "LIMIT_JUST_REACHED", 'data' => "You have reached the maximum number of uses for the AI Chatbot. Please try again next month."]));
     }
 
-    wp_die(json_encode(['code' => "SUCCESS", 'data' => "Chatbot quota updated", 'amount' => $chatbot_data[$user_ip]['amount']]));
+    wp_die(json_encode(['code' => "SUCCESS", 'data' => "Chatbot quota updated", 'amount' => $chatbot_data[$ip_key]['amount']]));
 }
 
 
@@ -1101,6 +1115,9 @@ add_action("wp_ajax_lws_tk_activatePlugin", "lws_tools_activate_plugin");
 function lws_tools_activate_plugin()
 {
     check_ajax_referer('tools_activate_plugin', '_ajax_nonce');
+    if (!current_user_can('manage_options')) {
+        wp_die(-1);
+    }
 
     if (isset($_POST['ajax_slug'])) {
         switch (sanitize_textarea_field($_POST['ajax_slug'])) {
@@ -1138,6 +1155,9 @@ add_action("wp_ajax_lwstools_updateAllPlugin", "lws_tk_update_all_plugin");
 function lws_tk_update_all_plugin()
 {
     check_ajax_referer('tools_update_every_plugin', '_ajax_nonce');
+    if (!current_user_can('manage_options')) {
+        wp_die(-1);
+    }
     $pu = new Plugin_Upgrader();
     $update_all = array();
     foreach (get_site_transient('update_plugins')->response as $plugin) {
@@ -1151,6 +1171,9 @@ add_action("wp_ajax_lwstools_updatePlugin", "lws_tk_update_plugin");
 function lws_tk_update_plugin()
 {
     check_ajax_referer('tools_update_one_plugin', '_ajax_nonce');
+    if (!current_user_can('manage_options')) {
+        wp_die(-1);
+    }
     $pu = new Plugin_Upgrader();
     $plugin_package = sanitize_text_field($_POST['lws_tk_update_plugin_specific']);
     $pu->upgrade($plugin_package);
@@ -1164,6 +1187,9 @@ add_action("wp_ajax_lwstools_updateAllTheme", "lws_tk_update_all_theme");
 function lws_tk_update_all_theme()
 {
     check_ajax_referer('tools_update_all_theme', '_ajax_nonce');
+    if (!current_user_can('manage_options')) {
+        wp_die(-1);
+    }
     $tu = new Theme_Upgrader();
     $update_all = array();
     foreach (get_site_transient('update_themes')->response as $theme) {
@@ -1177,6 +1203,9 @@ add_action("wp_ajax_lwstools_updateTheme", "lws_tk_update_theme");
 function lws_tk_update_theme()
 {
     check_ajax_referer('tools_update_one_theme', '_ajax_nonce');
+    if (!current_user_can('manage_options')) {
+        wp_die(-1);
+    }
     $tu = new Theme_Upgrader();
     $theme_package = sanitize_text_field($_POST['lws_tk_update_theme_specific']);
     $tu->upgrade($theme_package);
@@ -1189,6 +1218,9 @@ add_action("wp_ajax_lwstools_deleteAllPlugin", "lws_tk_delete_all_plugin");
 function lws_tk_delete_all_plugin()
 {
     check_ajax_referer('tools_delete_all_plugin', '_ajax_nonce');
+    if (!current_user_can('manage_options')) {
+        wp_die(-1);
+    }
     $to_delete = array();
     foreach (get_plugins() as $slug => $plugin) {
         if (!is_plugin_active($slug) && !is_plugin_active_for_network($slug)) {
@@ -1203,6 +1235,9 @@ add_action("wp_ajax_lwstools_deletePlugin", "lws_tk_delete_plugin");
 function lws_tk_delete_plugin()
 {
     check_ajax_referer('tools_delete_one_plugin', '_ajax_nonce');
+    if (!current_user_can('manage_options')) {
+        wp_die(-1);
+    }
     $plugin_package = sanitize_text_field($_POST['lws_tk_delete_plugin_specific']);
     delete_plugins([$plugin_package]);
     wp_die();
@@ -1214,6 +1249,9 @@ add_action("wp_ajax_lwstools_deleteAllTheme", "lws_tk_delete_all_theme");
 function lws_tk_delete_all_theme()
 {
     check_ajax_referer('tools_delete_all_theme', '_ajax_nonce');
+    if (!current_user_can('manage_options')) {
+        wp_die(-1);
+    }
     foreach (wp_get_themes() as $slug => $theme) {
         if ($theme['Name'] != wp_get_theme()->name) {
             delete_theme($slug);
@@ -1226,6 +1264,9 @@ add_action("wp_ajax_lwstools_deleteTheme", "lws_tk_delete_theme");
 function lws_tk_delete_theme()
 {
     check_ajax_referer('tools_delete_one_theme', '_ajax_nonce');
+    if (!current_user_can('manage_options')) {
+        wp_die(-1);
+    }
     $theme_package = sanitize_text_field($_POST['lws_tk_delete_theme_specific']);
     delete_theme($theme_package);
     wp_die();
@@ -1241,6 +1282,9 @@ add_action("wp_ajax_lwstools_updateTrads", "lws_tk_update_trads");
 function lws_tk_update_trads()
 {
     check_ajax_referer('tools_upgrade_tools_trad', '_ajax_nonce');
+    if (!current_user_can('manage_options')) {
+        wp_die(-1);
+    }
     $lp = new Language_Pack_Upgrader();
     $lp->bulk_upgrade();
     wp_die();
@@ -1252,6 +1296,9 @@ add_action("wp_ajax_lwstools_repairdb", "lws_tk_repairdb");
 function lws_tk_repairdb()
 {
     check_ajax_referer('tools_repair_only_db', '_ajax_nonce');
+    if (!current_user_can('manage_options')) {
+        wp_die(-1);
+    }
     $config_page = ABSPATH . 'wp-config.php';
     $config_page_content = file($config_page);
     foreach ($config_page_content as $content) {
@@ -1264,11 +1311,14 @@ function lws_tk_repairdb()
     }
     array_shift($config_page_content);
     array_unshift($config_page_content, "<?php\r\ndefine('WP_ALLOW_REPAIR', true);\r\n");
-    $file = @fopen($config_page, 'w');
-    foreach ($config_page_content as $line) {
-        @fwrite($file, $line);
+    $file = fopen($config_page, 'w');
+    if ($file === false) {
+        wp_die(-1);
     }
-    @fclose($file);
+    foreach ($config_page_content as $line) {
+        fwrite($file, $line);
+    }
+    fclose($file);
     echo esc_url(get_site_url() . "/wp-admin/maint/repair.php?repair=1");
     wp_die();
     /*@exec("wp config set WP_ALLOW_REPAIR true --raw");
@@ -1282,6 +1332,9 @@ add_action("wp_ajax_lwstools_optidb", "lws_tk_optidb");
 function lws_tk_optidb()
 {
     check_ajax_referer('tools_optimize_all_db', '_ajax_nonce');
+    if (!current_user_can('manage_options')) {
+        wp_die(-1);
+    }
     $config_page = ABSPATH . 'wp-config.php';
     $config_page_content = file($config_page);
     foreach ($config_page_content as $content) {
@@ -1294,11 +1347,14 @@ function lws_tk_optidb()
     }
     array_shift($config_page_content);
     array_unshift($config_page_content, "<?php\r\ndefine('WP_ALLOW_REPAIR', true);\r\n");
-    $file = @fopen($config_page, 'w');
-    foreach ($config_page_content as $line) {
-        @fwrite($file, $line);
+    $file = fopen($config_page, 'w');
+    if ($file === false) {
+        wp_die(-1);
     }
-    @fclose($file);
+    foreach ($config_page_content as $line) {
+        fwrite($file, $line);
+    }
+    fclose($file);
     echo esc_url(get_site_url() . "/wp-admin/maint/repair.php?repair=2");
     wp_die();
     /*@exec("wp config set WP_ALLOW_REPAIR true --raw");
@@ -1312,17 +1368,23 @@ add_action("wp_ajax_lwstools_deactivate_repair", "lws_tk_deactivate_repairdb");
 function lws_tk_deactivate_repairdb()
 {
     check_ajax_referer('tools_deactivate_repair_option', '_ajax_nonce');
+    if (!current_user_can('manage_options')) {
+        wp_die(-1);
+    }
     $config_page = ABSPATH . 'wp-config.php';
     $config_page_content = file($config_page);
     foreach ($config_page_content as $key => $content) {
         if (preg_match('/^define\(\s*\'([A-Z_]+)\',(.*)\)/', $content, $match)) {
             if ('WP_ALLOW_REPAIR' === $match[1]) {
                 $config_page_content[$key] = "";
-                $file = @fopen($config_page, 'w');
-                foreach ($config_page_content as $line) {
-                    @fwrite($file, $line);
+                $file = fopen($config_page, 'w');
+                if ($file === false) {
+                    wp_die(-1);
                 }
-                @fclose($file);
+                foreach ($config_page_content as $line) {
+                    fwrite($file, $line);
+                }
+                fclose($file);
                 wp_die();
             }
         }
@@ -1338,6 +1400,9 @@ add_action("wp_ajax_lwstools_disconnectall", "lws_tk_disconnect_all");
 function lws_tk_disconnect_all()
 {
     check_ajax_referer('disconnect_all_and_everyone', '_ajax_nonce');
+    if (!current_user_can('manage_options')) {
+        wp_die(-1);
+    }
     foreach (get_users(array('fields' => array('ID'))) as $user) {
         if ($user->ID == get_current_user_id()) {
             $sessions = WP_Session_Tokens::get_instance(get_current_user_id());
@@ -1356,9 +1421,13 @@ add_action("wp_ajax_lwstools_delete_revisions", "lws_tk_delete_revision");
 function lws_tk_delete_revision()
 {
     check_ajax_referer('delete_all_revisions', '_ajax_nonce');
+    if (!current_user_can('manage_options')) {
+        wp_die(-1);
+    }
     global $wpdb;
-    $days = sanitize_text_field($_POST['lws_tk_days_revisions']);
-    $wpdb->get_results("DELETE FROM `" . $wpdb->prefix . "posts` WHERE post_type='revision' AND post_modified < '" . date("Y-m-d H:i:s", time() - (24 * 60 * 60 * $days)) . "';");
+    $days = absint($_POST['lws_tk_days_revisions']);
+    $cutoff = date("Y-m-d H:i:s", time() - (24 * 60 * 60 * $days));
+    $wpdb->query($wpdb->prepare("DELETE FROM `" . $wpdb->prefix . "posts` WHERE post_type='revision' AND post_modified < %s", $cutoff));
     wp_die();
 }
 //
@@ -1368,6 +1437,9 @@ add_action("wp_ajax_lwstools_delete_trash_comments", "lws_tk_delete_trash_commen
 function lws_tk_delete_trash_comments()
 {
     check_ajax_referer('delete_all_trash_comments', '_ajax_nonce');
+    if (!current_user_can('manage_options')) {
+        wp_die(-1);
+    }
     global $wpdb;
     $wpdb->get_results("DELETE FROM `" . $wpdb->prefix . "comments` WHERE comment_approved='trash'");
     wp_die();
@@ -1379,6 +1451,9 @@ add_action("wp_ajax_lwstools_delete_spam_comments", "lws_tk_delete_spam_comments
 function lws_tk_delete_spam_comments()
 {
     check_ajax_referer('delete_all_spam_comms', '_ajax_nonce');
+    if (!current_user_can('manage_options')) {
+        wp_die(-1);
+    }
     global $wpdb;
     $wpdb->get_results("DELETE FROM `" . $wpdb->prefix . "comments` WHERE comment_approved='spam'");
     wp_die();
@@ -1390,6 +1465,9 @@ add_action("wp_ajax_lwstools_delete_transients", "lws_tk_delete_old_transients")
 function lws_tk_delete_old_transients()
 {
     check_ajax_referer('delete_all_transients', '_ajax_nonce');
+    if (!current_user_can('manage_options')) {
+        wp_die(-1);
+    }
     delete_expired_transients();
     wp_die();
 }
@@ -1400,6 +1478,9 @@ add_action("wp_ajax_lwstools_keep_changes", "lws_tk_keep_changes");
 function lws_tk_keep_changes()
 {
     check_ajax_referer('keep_on_delete_change', '_ajax_nonce');
+    if (!current_user_can('manage_options')) {
+        wp_die(-1);
+    }
     $is_checked = sanitize_text_field($_POST['state']);
     $is_checked == 'true' ? update_option('lws_tk_keep_data_on_delete', true) : delete_option('lws_tk_keep_data_on_delete');
     wp_die();

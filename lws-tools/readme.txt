@@ -3,7 +3,7 @@ Contributors: aurelienlws
 Tags: LWS, Security, Admin, Optimisation
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 2.6.2
+Stable tag: 2.6.3
 Requires PHP: 7.3
 Author : LWS
 Author URI: https://www.lws.fr/
@@ -192,6 +192,9 @@ There are 3 different ways to install LWS Tools (as with any other wordpress.org
 7. Autres outils
 
 == Changelog ==
+
+= 2.6.3 =
+* Fixed broken link in topbar
 
 = 2.6.2 =
 * The IA Chatbot can now be reduced while browsing pages to avoid issues where it would hide UI elements

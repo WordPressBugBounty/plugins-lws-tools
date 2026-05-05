@@ -1,14 +1,16 @@
 <?php
 $chatbot_data = get_option('lws_tools_chatbot_data', []);
-$user_ip = isset($_SERVER['HTTP_X_REAL_IP']) ? $_SERVER['HTTP_X_REAL_IP'] : '127.0.0.1';
+$raw_ip = isset($_SERVER['HTTP_X_REAL_IP']) ? $_SERVER['HTTP_X_REAL_IP'] : '127.0.0.1';
+$user_ip = filter_var($raw_ip, FILTER_VALIDATE_IP) ? $raw_ip : '127.0.0.1';
+$ip_key = hash('sha256', $user_ip);
 
-$user_data = isset($chatbot_data[$user_ip]) ? $chatbot_data[$user_ip] : ['amount' => 0, 'date' => time()];
+$user_data = isset($chatbot_data[$ip_key]) ? $chatbot_data[$ip_key] : ['amount' => 0, 'date' => time()];
 
 // If the last reset happened 30 days ago or more, reset right now
 if ($user_data['date'] < time() - (30 * 24 * 60 * 60)) {
     $user_data['amount'] = 0;
     $user_data['date'] = time();
-    $chatbot_data[$user_ip] = $user_data;
+    $chatbot_data[$ip_key] = $user_data;
     update_option('lws_tools_chatbot_data', $chatbot_data);
 }
 
@@ -38,7 +40,7 @@ if (!isset($user_data['amount']) || $user_data['amount'] >= 100) {
 
         <!-- This chatbot is build using https://openassistantgpt.io/ -->
         <iframe
-            src="https://www.openassistantgpt.io/embed/cmdol2mhl0003mblafzjcm8c9/window?chatbox=false&withExitX=true&clientSidePrompt=<?php echo $encoded_prompt; ?>"
+            src="https://www.openassistantgpt.io/embed/cmdol2mhl0003mblafzjcm8c9/window?chatbox=false&withExitX=true&clientSidePrompt=<?php echo esc_attr($encoded_prompt); ?>"
             style="z-index: 10000; margin-right: 6px; margin-bottom: 98px; display: none; position: fixed; right: 0; bottom: 0; pointer-events: none; overflow: hidden; height: 65vh; border: 2px solid #e2e8f0; border-radius: 0.375rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); max-width: 700px; width: stretch;"
             allow="clipboard-read; clipboard-write"
             allowfullscreen id="openassistantgpt-chatbot-iframe">

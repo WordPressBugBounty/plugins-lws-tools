@@ -1000,8 +1000,8 @@ msgstr "Vous aimez le plugin ? "
 msgid "<b>Exclusive</b>: Get <b>15%</b> off your WordPress hosting"
 msgstr "<b>Exclusif :</b> Obtenez <b>15%</b> de réduction sur les hébergements WordPress"
 
-msgid "<b>-15%</b> on our <a href=\"https://www.lws.fr/support/\" target=\"_blank\" class=\"link_to_support\">WordPress hostings</a> with the code"
-msgstr "<b>-15%</b> sur nos <a href=\"https://www.lws.fr/support/\" target=\"_blank\" class=\"link_to_support\">hébergements WordPress</a> avec le code"
+msgid "<b>-15%</b> on our <a href=\"https://www.lws.fr/hebergement_wordpress.php\" target=\"_blank\" class=\"link_to_support\">WordPress hostings</a> with the code"
+msgstr "<b>-15%</b> sur nos <a href=\"https://www.lws.fr/hebergement_wordpress.php\" target=\"_blank\" class=\"link_to_support\">hébergements WordPress</a> avec le code"
 
 msgid "A <a href=\"https://wordpress.org/support/plugin/lws-tools/reviews/#new-post\" target=\"_blank\" class=\"link_to_rating_with_stars\"><div class=\"lwstk_stars\">★★★★★</div> rating</a> will motivate us a lot."
 msgstr "Une <a href=\"https://wordpress.org/support/plugin/lws-tools/reviews/#new-post\" target=\"_blank\" class=\"link_to_rating_with_stars\"> note <div class=\"lwstk_stars\">★★★★★</div></a> nous motivera beaucoup."
