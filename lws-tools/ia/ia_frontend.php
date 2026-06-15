@@ -75,7 +75,7 @@ if (!isset($user_data['amount']) || $user_data['amount'] >= 100) {
                 chatbotButton.style.opacity = '0';
                 chatbotButton.style.transform = 'scale(0)';
                 chatbotButton.style.pointerEvents = 'none';
-                toggleButton.style.right = '6px';
+                toggleButton.style.right = '-20px';
                 toggleButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>';
             }
 
@@ -95,7 +95,7 @@ if (!isset($user_data['amount']) || $user_data['amount'] >= 100) {
                         chatbotIframe.style.display = 'none';
                         chatbotIframe.contentWindow.postMessage("closeChat", "*");
                     }
-                    toggleButton.style.right = '6px';
+                    toggleButton.style.right = '-20px';
                     toggleButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>';
                     localStorage.setItem('lws_chatbot_hidden', 'true');
                 }
